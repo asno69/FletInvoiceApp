@@ -1,0 +1,53 @@
+Caputo Michele Bokeler Straße 85
+26781 Papenburg DEU
+Tel: 01738251437 StNr: 53/245/00905 IdNr: 53 861 279
+309
+An: SOMEC SPA BRANCH
+GERMANY
+Segelmacherstraße 6
+26871 Papenburg DEU
+DE290333182
+
+Rechnungsdatum: {{DATE}}
+Leistungsdatum: {{SERVICE}}
+
+USt.IdNr: DE264120598
+
+Rechnung Nr:
+{{INVOICE_NUMBER}}
+
+Wir bedanken uns für Ihren Auftrag und stellen Ihnen die folgenden Leistungen in Rechnung.
+
+
+
+
+
+      EUR	                                                  {{SALARY1}}
+Commessa CM0184-003 Assistenza di Commessa Costr 720 Meyer Werft Germania
+
+
+
+
+Commessa CM0189-003 Assistenza di Commessa Costr 718 Meyer Werft Germania
+
+Commessa CM0231-003                 Assistenza di Commessa Costr 721 Meyer Werft Germania
+     EUR	                                                 {{SALARY2}}
+
+
+
+      EUR	                                                 {{SALARY3}}
+
+
+
+
+               Gesamt Nettosumme:	EUR	{{NETTO}}
+Mehrwertsteuer:	19%	{{STEUER}}
+Rechnungsbetrag Brutto:	EUR	{{BRUTTO}}
+
+
+
+Die Rechnung ist zu sofort fällig. Bitte überweisen Sie den Rechnungsbetrag ohne Abzüge auf unser Bankkonto.
+Bankverbindung: Caputo, Michele TARGO BANK AG
+Lange Str. 2
+26871 Papenburg IBAN-
+DE92300209005310725042 BIC – CMCIDEDD
