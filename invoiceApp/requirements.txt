@@ -1,4 +1,2 @@
 flet
-docx==0.2.4
-python-docx==1.1.2
-docx2pdf
+docxtpl
