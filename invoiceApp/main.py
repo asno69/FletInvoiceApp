@@ -2,7 +2,7 @@ import os
 from datetime import datetime
 import flet as ft
 from docx import Document
-import subprocess
+from docx2pdf import convert
 
 
 def main(page: ft.Page):
@@ -72,8 +72,8 @@ def main(page: ft.Page):
 
             doc.save(output_docx_path)
 
-            # Convert DOCX to PDF using pandoc
-            subprocess.run(['pandoc', output_docx_path, '-o', output_pdf_path], check=True)
+            # Convert DOCX to PDF using docx2pdf
+            convert(output_docx_path)
 
             page.add(ft.Text(f'Rechnung wurde erfolgreich erstellt und unter {output_docx_path} und {output_pdf_path} gespeichert!'))
 
