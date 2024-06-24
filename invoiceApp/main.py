@@ -1,9 +1,8 @@
 import os
 from datetime import datetime
 import flet as ft
-import win32com.client
-import pythoncom
-from docxtpl import DocxTemplate
+from docx import Document
+import subprocess
 
 
 def main(page: ft.Page):
@@ -19,8 +18,7 @@ def main(page: ft.Page):
     salary3_input = ft.TextField(label='Commessa CM0231-003 Assistenza di Commessa Costr 721')
 
     def create_invoice(e):
-        if any(field.value == '' for field in [salary1_input, salary2_input, salary3_input,
-                                               invoice_number_input, date_input, service_input]):
+        if any(field.value == '' for field in [salary1_input, salary2_input, salary3_input, invoice_number_input, date_input, service_input]):
             page.add(ft.Text("Alle Werte müssen gesetzt sein"))
             return
 
@@ -39,40 +37,43 @@ def main(page: ft.Page):
             return
 
         try:
-            pythoncom.CoInitialize()
-
             template_path = os.path.join(os.path.dirname(__file__), 'Vorlage.docx')
             output_docx_path = os.path.join(os.path.dirname(__file__), f'Rechnung_Nr{invoice_number_input.value}.docx')
             output_pdf_path = output_docx_path.replace('.docx', '.pdf')
 
             # Load template document
-            doc = DocxTemplate(template_path)
+            doc = Document(template_path)
 
-            # Define context for placeholders
-            brutto = salary1 + salary2 + salary3
-            context = {
-                'DATE': date,
-                'INVOICE_NUMBER': invoice_number_input.value,
-                'SERVICE': service_input.value,
-                'SALARY1': f'{salary1:.2f}',
-                'SALARY2': f'{salary2:.2f}',
-                'SALARY3': f'{salary3:.2f}',
-                'BRUTTO': f'{brutto:.2f}',
-                'STEUER': f'{(brutto * 0.19):.2f}',
-                'NETTO': f'{(brutto * 0.81):.2f}'
+            # Replace placeholders with actual values
+            placeholders = {
+                '{DATE}': date,
+                '{INVOICE_NUMBER}': invoice_number_input.value,
+                '{SERVICE}': service_input.value,
+                '{SALARY1}': f'{salary1:.2f}',
+                '{SALARY2}': f'{salary2:.2f}',
+                '{SALARY3}': f'{salary3:.2f}',
+                '{BRUTTO}': f'{salary1 + salary2 + salary3:.2f}',
+                '{STEUER}': f'{(salary1 + salary2 + salary3) * 0.19:.2f}',
+                '{NETTO}': f'{(salary1 + salary2 + salary3) * 0.81:.2f}'
             }
 
-            # Render document with context
-            doc.render(context)
+            for paragraph in doc.paragraphs:
+                for placeholder, value in placeholders.items():
+                    if placeholder in paragraph.text:
+                        paragraph.text = paragraph.text.replace(placeholder, value)
+
+            for table in doc.tables:
+                for row in table.rows:
+                    for cell in row.cells:
+                        for paragraph in cell.paragraphs:
+                            for placeholder, value in placeholders.items():
+                                if placeholder in paragraph.text:
+                                    paragraph.text = paragraph.text.replace(placeholder, value)
+
             doc.save(output_docx_path)
 
-            # Convert DOCX to PDF using Microsoft Word
-            word = win32com.client.Dispatch("Word.Application")
-            word.Visible = False
-            doc = word.Documents.Open(output_docx_path)
-            doc.SaveAs(output_pdf_path, FileFormat=17)
-            doc.Close()
-            word.Quit()
+            # Convert DOCX to PDF using pandoc
+            subprocess.run(['pandoc', output_docx_path, '-o', output_pdf_path], check=True)
 
             page.add(ft.Text(f'Rechnung wurde erfolgreich erstellt und unter {output_docx_path} und {output_pdf_path} gespeichert!'))
 

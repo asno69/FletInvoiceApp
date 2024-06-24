@@ -1,2 +1,5 @@
 flet
-docxtpl
+docx==0.2.4
+python-docx==1.1.2
+pypandoc
+pdflatex
