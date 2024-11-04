@@ -1,2 +1,3 @@
 flet
 docxtpl
+pywin32

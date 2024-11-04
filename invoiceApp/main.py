@@ -17,9 +17,9 @@ def main(page: ft.Page):
     invoice_number_input = ft.TextField(label='Rechnungsnummer')
     date_input = ft.TextField(label='Rechnungsdatum (TT.MM.JJJJ)')
     service_input = ft.TextField(label='Leistungszeitraum')
-    salary1_input = ft.TextField(label='Commessa CM0184-003 Assistenza di Commessa Costr 720')
-    salary2_input = ft.TextField(label='Commessa CM0189-003 Assistenza di Commessa Costr 718')
-    salary3_input = ft.TextField(label='Commessa CM0231-003 Assistenza di Commessa Costr 721')
+    salary1_input = ft.TextField(label='Commessa CM0221-003 ATTIVITA\' DI LOGISTICA COSTRUZIONE 706')
+    salary2_input = ft.TextField(label='Commessa CM0231-003 ATTIVITA\' DI LOGISTICA COSTRUZIONE 721')
+    salary3_input = ft.TextField(label='Commessa CM0255-0003 ATTIVITA\' DI LOGISTICA DISNEY ADVENTURE')
 
     def create_invoice(e):
         if (salary1_input.value == '' or salary2_input.value == '' or salary3_input.value == '' or
@@ -61,9 +61,9 @@ def main(page: ft.Page):
             'SALARY1': f'{salary1:.2f}',
             'SALARY2': f'{salary2:.2f}',
             'SALARY3': f'{salary3:.2f}',
-            'BRUTTO': f'{(salary1 + salary2 + salary3):.2f}',
+            'BRUTTO': f'{(salary1 + salary2 + salary3) * 1.19:.2f}',
             'STEUER': f'{(salary1 + salary2 + salary3) * 0.19:.2f}',
-            'NETTO': f'{(salary1 + salary2 + salary3) * 0.81:.2f}'
+            'NETTO': f'{(salary1 + salary2 + salary3):.2f}'
         }
 
         # Render template with context
